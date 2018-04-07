@@ -1,0 +1,161 @@
+A faire :
+	 * 
+	 * Faire les kits (automatisation à venir - chargement auto des kits depuis un fichier yml)
+	 * Téléportation sur un point de spawn automatique sur une arène spécifique
+	 * Pouvoir créer une arène auto IG.
+	 * Chargement auto de toutes les maps depuis un fichier .yml
+	 * Ne pas oublier de gérer les events
+	 *
+	 
+MakeLogs 15/01/2018 :
+
+Création du sytème de gestion du fichier arena.yml. ArenaCommand.java / FileManager.java
+	Chargement auto des arènes
+	Enregistrement d'une nouvelle arène avec ses points de spawn
+	
+	
+Création du sytème de dispatch aléatoire par arène. SpreadPlayersManager.java
+	Fonction du choix aléatoire du point de spawn par arène effectué (locToTeleport(String name))
+	
+
+Création du sytème pour afficher la liste des points de spawn par arène. ArenaCommand.java
+	Effectué. 
+	
+Mise à jour du système de saveArena (système de sécurité des 10 points de spawn ajouté). ArenaCommand.java / FileManager.java
+
+Demain : faire la sauvegarde des coordonnées comme dans le FkBase.java ligne 56.
+
+Fin de MakeLogs 15/01/2018////.
+-------------------------------
+
+MakeLogs 16/01/17 :
+
+Finalisation de la fonctione writeArenas(Location location, String arenaName, String arg)
+	Mise en place de l'écriture et de la sauvegarde des coordonnées.
+
+Mise à jour de la fonction loadArenasLocation()
+	Erreur de code résolue, la fonction ne prenait pas en compte les noms des points de spawn.
+	
+Fin de MakeLogs 16/01/2018////.
+-------------------------------	
+	
+MakeLogs 16/02/18 :
+
+Page vive les static : https://gist.github.com/DiscowZombie/0f1ba953b677788fc169336583706b05
+
+Faire les modifications sur les méthode d'écriture et de lecture du arena.yml.
+
+Fin de MakeLogs 16/02/2018////.
+-------------------------------	
+
+MakeLogs 19/02/2018 :
+
+Résolution du problème du fichiers arena.yml. Création du fichier OK. Reste à tester si les LOCATION se sont bien add et si l'on peut en ajouter 
+ainsi que l'écriture automatique du fichier.
+
+Fonction loadConfArenas() ne charge pas lees données des maps, mais aucun NPE, aucune erreur.
+
+Fin de MakeLogs 19/02/2018////.
+-------------------------------
+
+MakeLogs 20/02/2018 :
+
+Création de la commande arena.
+
+Finalisation et premiers tests de l'utilisation du fichier arena.yml.
+Résultats : Non concluants. Mise au point de certains détails.
+
+Finalisation des systèmes de création, de sauvegarde et de chargement des arènes. Fichiers fonctionnels.
+
+A faire : tester le dispatch random parmis les points de spawn.
+
+Fin de MakeLogs 20/02/2018////.
+-------------------------------
+
+MakeLogs 21/02/2018 :
+
+Mise au point et finalisation du système de TP aléatoire dans les différentes maps.
+
+Kits Archer fonctionnel. Envoi du code aux autres pour développement des autres kits.
+
+Kits codés et fonctionnels : CommandKitPvP.java codé et terminé.
+
+A faire : Reste à modifier les kits au niveau des potions et des enchantes des armures : KitManager.java
+
+Fin de MakeLogs 21/02/2018////.
+-------------------------------
+
+-----Version 1.0.0 terminée au 22/02/2018-----
+
+V2 : diriger les kits en jeu ET / OU en .yml
+Connaitre la position d'un point en l'entrant dans le chat.
+
+MakeLogs 24/02/2018 :
+
+Création du système de visionnage des points de spawn en jeu.
+
+Fin de MakeLogs 24/02/2018////.
+-------------------------------
+
+MakeLogs 05/02/2018:
+
+Début de la création du systèm de chargement automatique des kits. 
+
+Création des objets Armor, Weapons et Consumables.
+
+Rédaction du fichier documentation.yml.
+
+Développement de la partie LoadKits bien entamée. Reste à coder la bouffe et les armes, puis à compléter la partie manquante du kit : weaponsNumber,
+puis relire, nettoyer, incorporer pour utiliser et tester.
+
+Fin de MakeLogs 25/02/2018////.
+-------------------------------
+
+MakeLogs du 26/02/2018:
+
+Finalisation des classes de gestion des kits.
+
+Premiers test et résolution des premiers bugs.
+
+1- Commentaires non pris en charge
+
+Méthodes de chargement des kits opérationelles. Reste à coder la partie pour l'équiper sur un joueur.
+
+Fin de MakeLogs 26/02/2018////.
+-------------------------------
+
+MakeLogs 27/02/208:
+
+Création des events (mort, vie etc...).
+
+Fin de MakeLogs 27/02/2018////.
+-------------------------------
+
+MakeLogs du 29/03/2018:
+
+Chargement d'un kit et équipement d'un joueur opérationel.
+
+A voir si il y a la possibilité d'intégrer le nombre du slot.
+
+Fin de MakeLogs 29/03/2018////.
+-------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
