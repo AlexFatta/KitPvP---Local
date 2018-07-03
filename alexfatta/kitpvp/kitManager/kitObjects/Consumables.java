@@ -8,6 +8,7 @@ public class Consumables {
 	
 	private ItemStack potion1, potion2, potion3, food;
 	private int potions_slot, food_slot;
+	private static String consumableName;
 	private static ArrayList<ItemStack> listConsumables = new ArrayList<>();
 	
 	public Consumables(){
@@ -92,6 +93,14 @@ public class Consumables {
 
 	public static void setMapConsumables(ArrayList<ItemStack> mapConsumables) {
 		Consumables.listConsumables = mapConsumables;
+	}
+
+	public static String getConsumableName() {
+		return consumableName;
+	}
+
+	public static void setConsumableName(String consumableName) {
+		Consumables.consumableName = consumableName;
 	}
 
 }

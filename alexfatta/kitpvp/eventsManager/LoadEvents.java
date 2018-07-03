@@ -9,12 +9,12 @@ import fr.alexfatta.kitpvp.eventsManager.joinEvent.JoinEventManager;
 import fr.alexfatta.kitpvp.eventsManager.leaveEvent.LeaveEventManager;
 
 public class LoadEvents {
-	
-	public static void loadAllEvents(Main main) {
-		Bukkit.getPluginManager().registerEvents(new JoinEventManager(), main);
-		Bukkit.getPluginManager().registerEvents(new DeathEventManager(), main);
-		Bukkit.getPluginManager().registerEvents(new LeaveEventManager(), main);
-		Bukkit.getPluginManager().registerEvents(new DropEventManager(), main);
-	}
+
+    public static void loadAllEvents(Main main) {
+        Bukkit.getPluginManager().registerEvents(new JoinEventManager(), main);
+        Bukkit.getPluginManager().registerEvents(new DeathEventManager(), main);
+        Bukkit.getPluginManager().registerEvents(new LeaveEventManager(), main);
+        Bukkit.getPluginManager().registerEvents(new DropEventManager(), main);
+    }
 
 }

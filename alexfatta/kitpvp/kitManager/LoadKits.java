@@ -28,8 +28,10 @@ public class LoadKits {
 
 	public static void loadKit() {
 
+		ConsoleCommandSender sender = Bukkit.getServer().getConsoleSender();
 
-		//On récupère le nom et la section du Kit à charger
+
+		//On rÃ©cupÃ¨re le nom et la section du Kit Ã  charger
 		for (String kitName : FileManager.getKits().getConfigurationSection("kits").getValues(false).keySet()) {
 
 			int totalPotionNumber = 1;
@@ -40,11 +42,11 @@ public class LoadKits {
 			ArrayList<ItemStack> listWeapons = new ArrayList<>();
 			ArrayList<ItemStack> listOfPotionsToLoad = new ArrayList<>();
 
-			//On récupère l'élément à charger du kit en chargement
+			//On rÃ©cupÃ¨re l'Ã©lÃ©ment Ã  charger du kit en chargement
 			for (String elementName : FileManager.getKits().getConfigurationSection("kits." + kitName).getValues(false).keySet()) {
 
-				//On définit le type, le slot et le nombre d'item.
-				String itemName = FileManager.getKits().getString("kits." + kitName + "." + elementName + ".name").replace('&', '§');
+				//On dÃ©finit le type, le slot et le nombre d'item.
+				String itemName = FileManager.getKits().getString("kits." + kitName + "." + elementName + ".name").replace('&', 'Â§');
 				@SuppressWarnings("unused")
 				String type = FileManager.getKits().getString("kits." + kitName + "." + elementName + ".type");
 				int numberOfItem = FileManager.getKits().getInt("kits." + kitName + "." + elementName + ".number");
@@ -54,14 +56,14 @@ public class LoadKits {
 				//C'est une arme, un consommable ou une armure
 				if (FileManager.getKits().get("kits." + kitName + "." + elementName + ".type") instanceof String) {
 
-					
+
 					switch (elementName.toString()) {
 					case "Helmet":
 						ItemStack helmet = new ItemStack(attributeEnchants(kitName, elementName, itemName, Material.matchMaterial(FileManager.getKits().getString("kits." + kitName + "." + elementName + ".type")), true));
 						armor.setHelmet(helmet);
 						break;
-					case "Chestplate": 
-						ItemStack chestplate = new ItemStack(attributeEnchants(kitName, elementName, itemName, Material.matchMaterial(FileManager.getKits().getString("kits." + kitName + "." + elementName + ".type")), true));	
+					case "Chestplate":
+						ItemStack chestplate = new ItemStack(attributeEnchants(kitName, elementName, itemName, Material.matchMaterial(FileManager.getKits().getString("kits." + kitName + "." + elementName + ".type")), true));
 						armor.setChestplate(chestplate);
 						break;
 					case "Leggings":
@@ -81,11 +83,13 @@ public class LoadKits {
 						for (Material m : ListConsumables.getConsumables()) {
 							if (m.equals(element)) {
 								ItemStack ISToAddConsumables = new ItemStack(attributeEnchants(kitName, elementName, itemName, Material.matchMaterial(FileManager.getKits().getString("kits." + kitName + "." + elementName + ".type")), false));
+								ItemMeta ISMeta = ISToAddConsumables.getItemMeta();
+								ISMeta.setDisplayName(FileManager.getKits().getString("kits." + kitName + "." + elementName + ".name").replace("&", "Â§"));
+								ISToAddConsumables.setItemMeta(ISMeta);
 								ISToAddConsumables.setAmount(numberOfItem);
 								listConsumables.add(ISToAddConsumables);
 							}
 						}
-
 
 						//Verification si l'objet est une arme
 						for (Material m : ListOfWeapons.getWeaponsList()) {
@@ -106,6 +110,9 @@ public class LoadKits {
 					int potionID = FileManager.getKits().getInt("kits." + kitName + "." + elementName + ".type");
 					int numberOfPotion = FileManager.getKits().getInt("kits." + kitName + "." + elementName + ".number");
 					ItemStack potion = new ItemStack(Material.POTION, numberOfPotion, (short) potionID);
+					/*ItemMeta potionMeta = potion.getItemMeta();
+                    potionMeta.setDisplayName(FileManager.getKits().getString("kits." + kitName + "." + elementName + ".name").replace("&", "Â§"));
+                    potion.setItemMeta(potionMeta);*/
 
 					switch (totalPotionNumber) {
 
@@ -139,10 +146,12 @@ public class LoadKits {
 
 			loadedKits.add(kitToLoad);
 
-			ConsoleCommandSender sender = Bukkit.getServer().getConsoleSender();
 			sender.sendMessage(ChatColor.GREEN + "Kit " + ChatColor.YELLOW + kitToLoad.getKitName() + ChatColor.GREEN + " saved with success !");
 
-		} //Fin de la boucle kitName
+		} //Fin de la boucle kitName For
+
+		sender.sendMessage(ChatColor.GREEN + "Loaded kits : " + loadedKits);
+
 	}
 
 	public static ItemStack attributeEnchants(String kitName, String elementName, String itemName, Material elementToEnchant, boolean isEnchantable) {
@@ -167,7 +176,7 @@ public class LoadKits {
 						power = Integer.parseInt(strPower[1]);
 					} else {
 						power = 1;
-					}						 
+					}
 
 					meta.addEnchant(objEnch, power, true);
 				}
@@ -175,7 +184,7 @@ public class LoadKits {
 
 
 			} catch (NullPointerException e) {
-				System.out.println("Error : bad enchantment ! Cannot enchant the piece " + elementName);
+				System.out.println("Error : bad enchantment ! Cannot find or enchant the piece " + elementName + " of kit " + kitName);
 			}
 		}
 		return elementItemStack;

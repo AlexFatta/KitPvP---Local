@@ -16,19 +16,19 @@ import fr.alexfatta.kitpvp.fileManager.FileManager;
 
 public class SpreadPlayersManager implements CommandExecutor {
 
-	//R�cup�rer le nombre de SP par ar�ne
+	//RÃ©cupÃ©rer le nombre de SP par arÃ¨ne
 
 	public static Main main;
 
 	private static Integer spawns_count;
 
-	private static ArrayList<String> arenaList = new ArrayList<>(); //Liste des noms des ar�nes
-	private static HashMap<String, Location> spawnPoints = new HashMap<>(); //Liste des ar�nes avec leurs points de spawn
+	private static ArrayList<String> arenaList = new ArrayList<>(); //Liste des noms des arÃ¨nes
+	private static HashMap<String, Location> spawnPoints = new HashMap<>(); //Liste des arÃ¨nes avec leurs points de spawn
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label,	String[] args) {
 
-		if (sender instanceof Player && label.equalsIgnoreCase("spread")) {	
+		if (sender instanceof Player && label.equalsIgnoreCase("spread")) {
 			Player player = (Player) sender;
 			if (args.length == 1) {
 				player.teleport(locToTeleport(args[0].toString()));
@@ -44,7 +44,7 @@ public class SpreadPlayersManager implements CommandExecutor {
 
 	public Location locToTeleport (String name) {
 		Location location = null;
-		
+
 		int spawnNumber = 0;
 		for (@SuppressWarnings("unused") String secondEntry : FileManager.getArenas().getConfigurationSection("Arenas." + name).getValues(false).keySet()) {
 			spawnNumber += 1;
@@ -52,9 +52,9 @@ public class SpreadPlayersManager implements CommandExecutor {
 
 		Random random= new Random();
 		int alea = random.nextInt(spawnNumber + 1);
-		
+
 		if (alea == 0) alea +=1;
-		
+
 		location = spawnPoints.get(name + "." + name + "_" + alea);
 
 		return location;
@@ -67,7 +67,7 @@ public class SpreadPlayersManager implements CommandExecutor {
 	public static void setSpawns_count(Integer spawns_count) {
 		SpreadPlayersManager.spawns_count = spawns_count;
 	}
-	
+
 	public static HashMap<String, Location> getSpawnPoints() {
 		return spawnPoints;
 	}

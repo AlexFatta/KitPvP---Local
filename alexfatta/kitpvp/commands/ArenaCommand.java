@@ -11,83 +11,83 @@ import fr.alexfatta.kitpvp.spreadPlayers.SpreadPlayersManager;
 
 public class ArenaCommand implements CommandExecutor {
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-		if (label.equalsIgnoreCase("arena") && sender instanceof Player ) {
-			Player player = (Player) sender;
+        if (label.equalsIgnoreCase("arena") && sender instanceof Player ) {
+            Player player = (Player) sender;
 
-			if (args.length >= 1 && args.length <= 3) {	
-				if (player.hasPermission("kitpvp.arena.manage") || player.isOp()) {
-					if (args[0].equalsIgnoreCase("help")) {
-						player.sendMessage(ChatColor.GREEN + "Correct usage :");
-						player.sendMessage(ChatColor.AQUA + "/arena create <name>" + ChatColor.RESET + " : " + ChatColor.LIGHT_PURPLE + "CrÈer une nouvelle arËne.");
-						player.sendMessage(ChatColor.AQUA + "/arena <name> setspawn <number>" + ChatColor.RESET + " : " + ChatColor.LIGHT_PURPLE + "Pose un point de spawn isi pour cette arËne.");
-						return true;
+            if (args.length >= 1 && args.length <= 3) {
+                if (player.hasPermission("kitpvp.arena.manage") || player.isOp()) {
+                    if (args[0].equalsIgnoreCase("help")) {
+                        player.sendMessage(ChatColor.GREEN + "Correct usage :");
+                        player.sendMessage(ChatColor.AQUA + "/arena create <name>" + ChatColor.RESET + " : " + ChatColor.LIGHT_PURPLE + "Cr√©er une nouvelle ar√®ne.");
+                        player.sendMessage(ChatColor.AQUA + "/arena <name> setspawn <number>" + ChatColor.RESET + " : " + ChatColor.LIGHT_PURPLE + "Pose un point de spawn isi pour cette ar√®ne.");
+                        return true;
 
 
-					} else if (args[0].equalsIgnoreCase("create") && args.length == 2) {
-						if (!SpreadPlayersManager.getArenaList().contains(args[1].toString())) {
-							SpreadPlayersManager.getArenaList().add(args[1].toString());
-							player.sendMessage(ChatColor.GREEN + "Tu as crÈe l'arËne " + ChatColor.LIGHT_PURPLE + args[1].toString());
-							player.sendMessage(ChatColor.GREEN + "Tu peux maintenant lui attribuer ses points de spawn : " + ChatColor.LIGHT_PURPLE +
-									"/arena " + ChatColor.YELLOW + args[1].toString() + ChatColor.LIGHT_PURPLE + " setspawn <number>");
-							return true;
-						} else {
-							player.sendMessage(ChatColor.RED + "Erreur : impossible de crÈer cette arËne. Est-elle dÈj‡ crÈÈe... ?");
-						}
+                    } else if (args[0].equalsIgnoreCase("create") && args.length == 2) {
+                        if (!SpreadPlayersManager.getArenaList().contains(args[1].toString())) {
+                            SpreadPlayersManager.getArenaList().add(args[1].toString());
+                            player.sendMessage(ChatColor.GREEN + "Tu as cr√©e l'ar√®ne " + ChatColor.LIGHT_PURPLE + args[1].toString());
+                            player.sendMessage(ChatColor.GREEN + "Tu peux maintenant lui attribuer ses points de spawn : " + ChatColor.LIGHT_PURPLE +
+                                    "/arena " + ChatColor.YELLOW + args[1].toString() + ChatColor.LIGHT_PURPLE + " setspawn <number>");
+                            return true;
+                        } else {
+                            player.sendMessage(ChatColor.RED + "Erreur : impossible de cr√©er cette ar√®ne. Est-elle d√©j√† cr√©√©e... ?");
+                        }
 
-					} else if ((args.length == 3) && (args[1].equalsIgnoreCase("setspawn")) && (SpreadPlayersManager.getArenaList().contains(args[0].toString()))) {
-						FileManager.writeConfArenas(args[0].toString(), player.getLocation(), args[2]);
+                    } else if ((args.length == 3) && (args[1].equalsIgnoreCase("setspawn")) && (SpreadPlayersManager.getArenaList().contains(args[0].toString()))) {
+                        FileManager.writeConfArenas(args[0].toString(), player.getLocation(), args[2]);
 
-						player.sendMessage(ChatColor.GREEN + "Tu as ajoutÈ ce point de spawn ‡ l'arËne " + ChatColor.LIGHT_PURPLE + args[0].toString());
-						FileManager.saveArena();
-						return true;
+                        player.sendMessage(ChatColor.GREEN + "Tu as ajout√© ce point de spawn √† l'ar√®ne " + ChatColor.LIGHT_PURPLE + args[0].toString());
+                        FileManager.saveArena();
+                        return true;
 
-					} else if (args[0].equalsIgnoreCase("list") && args.length == 1){
-						player.sendMessage(ChatColor.GREEN + "Voici la liste des arËnes :");
-						player.sendMessage(ChatColor.GRAY + "Chargement...");
-						player.sendMessage(SpreadPlayersManager.getArenaList().toString());
-						return true;
+                    } else if (args[0].equalsIgnoreCase("list") && args.length == 1){
+                        player.sendMessage(ChatColor.GREEN + "Voici la liste des ar√®nes :");
+                        player.sendMessage(ChatColor.GRAY + "Chargement...");
+                        player.sendMessage(SpreadPlayersManager.getArenaList().toString());
+                        return true;
 
-					} else if (args[0].equalsIgnoreCase("see") && args.length == 2 && SpreadPlayersManager.getArenaList().contains(args[1].toString())){
-						player.sendMessage(ChatColor.GREEN + "Voici la liste des point de spawn de l'arËne " +ChatColor.YELLOW + args[1].toString() + ChatColor.GREEN + " :");
-						player.sendMessage(ChatColor.GRAY + "Chargement...");
+                    } else if (args[0].equalsIgnoreCase("see") && args.length == 2 && SpreadPlayersManager.getArenaList().contains(args[1].toString())){
+                        player.sendMessage(ChatColor.GREEN + "Voici la liste des point de spawn de l'ar√®ne " +ChatColor.YELLOW + args[1].toString() + ChatColor.GREEN + " :");
+                        player.sendMessage(ChatColor.GRAY + "Chargement...");
 
-						int count = 0;
-						for (String secondEntry : FileManager.getArenas().getConfigurationSection("Arenas." + args[1].toString()).getValues(false).keySet()) {
-							count += 1;
+                        int count = 0;
+                        for (String secondEntry : FileManager.getArenas().getConfigurationSection("Arenas." + args[1].toString()).getValues(false).keySet()) {
+                            count += 1;
 
-							String worldName = FileManager.getArenas().getString("Arenas." + args[1] + "." + secondEntry + ".world");
-							double x = FileManager.getArenas().getDouble("Arenas." + args[1] + "." + secondEntry + ".x");
-							double y = FileManager.getArenas().getDouble("Arenas." + args[1] + "." + secondEntry + ".y");
-							double z = FileManager.getArenas().getDouble("Arenas." + args[1] + "." + secondEntry +  ".z");
+                            String worldName = FileManager.getArenas().getString("Arenas." + args[1] + "." + secondEntry + ".world");
+                            double x = FileManager.getArenas().getDouble("Arenas." + args[1] + "." + secondEntry + ".x");
+                            double y = FileManager.getArenas().getDouble("Arenas." + args[1] + "." + secondEntry + ".y");
+                            double z = FileManager.getArenas().getDouble("Arenas." + args[1] + "." + secondEntry +  ".z");
 
-							player.sendMessage(ChatColor.LIGHT_PURPLE + "Location " + count + " :");
-							player.sendMessage(ChatColor.YELLOW + "  Nom du monde de la position : " + ChatColor.DARK_GREEN + worldName + "\n" + 
-									ChatColor.YELLOW + "  CoordonÈe en X de la position : " + ChatColor.DARK_GREEN + x + "\n" + 
-									ChatColor.YELLOW + "  CoordonÈe en Y de la position : " + ChatColor.DARK_GREEN + y + "\n" + 
-									ChatColor.YELLOW + "  CoordonÈe en Z de la position : " + ChatColor.DARK_GREEN + z + "\n");
-						}
-						return true;
-					}
+                            player.sendMessage(ChatColor.LIGHT_PURPLE + "Location " + count + " :");
+                            player.sendMessage(ChatColor.YELLOW + "  Nom du monde de la position : " + ChatColor.DARK_GREEN + worldName + "\n" +
+                                    ChatColor.YELLOW + "  Coordon√©e en X de la position : " + ChatColor.DARK_GREEN + x + "\n" +
+                                    ChatColor.YELLOW + "  Coordon√©e en Y de la position : " + ChatColor.DARK_GREEN + y + "\n" +
+                                    ChatColor.YELLOW + "  Coordon√©e en Z de la position : " + ChatColor.DARK_GREEN + z + "\n");
+                        }
+                        return true;
+                    }
 
-					else {
-						player.sendMessage(ChatColor.RED + "Erreur : mauvaise saisie.");
-						player.sendMessage(ChatColor.RED + "/arena help pour afficher l'aide.");
-						return true;
-					}
+                    else {
+                        player.sendMessage(ChatColor.RED + "Erreur : mauvaise saisie.");
+                        player.sendMessage(ChatColor.RED + "/arena help pour afficher l'aide.");
+                        return true;
+                    }
 
-				}
-			} else {
-				player.sendMessage(ChatColor.RED + "Erreur : mauvaise saisie.");
-				player.sendMessage(ChatColor.RED + "/arena help pour afficher l'aide.");
-				return true;
-			}
+                }
+            } else {
+                player.sendMessage(ChatColor.RED + "Erreur : mauvaise saisie.");
+                player.sendMessage(ChatColor.RED + "/arena help pour afficher l'aide.");
+                return true;
+            }
 
-		}
+        }
 
-		return false;
-	}
+        return false;
+    }
 
 }
